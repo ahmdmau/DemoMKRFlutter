@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         google()
         mavenCentral()
@@ -8,4 +9,4 @@ pluginManagement {
 
 rootProject.name = "DemoMKRFlutter"
 include ':app'
-include ':auth_module'
+include ':mkr_authentication'

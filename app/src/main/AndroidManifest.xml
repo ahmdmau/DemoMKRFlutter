@@ -17,9 +17,6 @@
         android:networkSecurityConfig="@xml/network_security_config">
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
         <activity
-            android:name=".MKRAuthenticationActivity"
-            android:exported="false" />
-        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
