@@ -1,5 +1,6 @@
 package com.example.demomkrflutter
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -12,7 +13,8 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            MKRAuthentication.auth(this)
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }, 3000)
     }
 

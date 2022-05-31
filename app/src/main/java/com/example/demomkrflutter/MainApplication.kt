@@ -15,6 +15,7 @@ class MainApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
+
         flutterEngine = FlutterEngine(this).apply {
             dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
         }
