@@ -7,6 +7,6 @@ import com.example.mkr_authentication.MKRAuthenticationConfig
 class MainApplication: Application() {
     override fun onCreate() {
         super.onCreate()
-        MKRAuthentication.configure("MEKARI_FLEX_CLIENT_ID", MKRAuthenticationConfig.STAGING, this)
+        MKRAuthentication.configure("YOUR_CLIENT_ID", MKRAuthenticationConfig.STAGING, this)
     }
 }
