@@ -9,7 +9,6 @@ import io.flutter.embedding.engine.dart.DartExecutor
 
 const val URL_PARAMS_KEY = "urlParams"
 const val IS_PRODUCTION_KEY = "isProd"
-const val AUTH_TYPE_KEY = "authConfiguration"
 const val REFRESH_TOKEN_KEY = "refreshToken"
 const val REQUEST_CODE_AUTH = 1122
 
@@ -21,9 +20,9 @@ class MKRAuthentication {
         private lateinit var flutterEngine: FlutterEngine
         const val ENGINE_ID = "auth_engine"
 
-        fun configure(clientId: String, config: MKRAuthenticationConfig, context: Context) {
+        fun configure(clientId: String, config: MkrAuthenticationConfig, context: Context) {
             Companion.clientId = clientId
-            isProduction = config == MKRAuthenticationConfig.PRODUCTION
+            isProduction = config == MkrAuthenticationConfig.PRODUCTION
 
             flutterEngine = FlutterEngine(context).apply {
                 dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
@@ -36,7 +35,6 @@ class MKRAuthentication {
             intent.putExtra(REFRESH_TOKEN_KEY, "")
             intent.putExtra(URL_PARAMS_KEY, "scope=sso:profile&client_id=$clientId")
             intent.putExtra(IS_PRODUCTION_KEY, isProduction)
-            intent.putExtra(AUTH_TYPE_KEY, MKRAuthenticationType.AUTH.name)
             activity.startActivityForResult(intent, REQUEST_CODE_AUTH)
         }
 
@@ -45,7 +43,6 @@ class MKRAuthentication {
             intent.putExtra(REFRESH_TOKEN_KEY, refreshToken)
             intent.putExtra(URL_PARAMS_KEY, "scope=sso:profile&client_id=$clientId")
             intent.putExtra(IS_PRODUCTION_KEY, isProduction)
-            intent.putExtra(AUTH_TYPE_KEY, MKRAuthenticationType.REFRESH.name)
             activity.startActivityForResult(intent, REQUEST_CODE_AUTH)
         }
 

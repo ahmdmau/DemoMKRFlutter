@@ -1,5 +1,5 @@
 package com.example.mkr_authentication
 
-enum class MKRAuthenticationConfig {
+enum class MkrAuthenticationConfig {
     STAGING, PRODUCTION
 }
