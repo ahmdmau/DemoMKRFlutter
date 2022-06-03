@@ -10,7 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 
 const val methodChannel = "com.mekari.auth_module"
 const val authResponse = "authResponse"
-const val refreshTokenResponse = "refreshResponse"
+const val authFailedResponse = "authFailedResponse"
 
 class MKRAuthenticationActivity : FlutterActivity() {
     private val channel = FlutterEngineCache.getInstance().get(ENGINE_ID)?.dartExecutor?.let {
@@ -48,12 +48,12 @@ class MKRAuthenticationActivity : FlutterActivity() {
                     setResult(REQUEST_CODE_AUTH, intent)
                     finish()
                 }
-                refreshTokenResponse -> {
+                authFailedResponse -> {
                     val refreshTokenMessage = call.arguments as String
                     val intent = Intent().apply {
-                        putExtra(refreshTokenResponse, refreshTokenMessage)
+                        putExtra(authFailedResponse, refreshTokenMessage)
                     }
-                    setResult(REQUEST_CODE_REFRESH, intent)
+                    setResult(REQUEST_CODE_AUTH, intent)
                     finish()
                 }
             }
@@ -65,20 +65,18 @@ class MKRAuthenticationActivity : FlutterActivity() {
     }
 
     private fun initializeMethod(authType: String) {
+        val authArguments = HashMap<String, Any>()
         if (authType == MKRAuthenticationType.AUTH.name) {
-            val authArguments = HashMap<String, Any>()
             intent.getStringExtra(URL_PARAMS_KEY)?.let { authArguments.put(URL_PARAMS_KEY, it) }
-            authArguments.put(IS_PRODUCTION_KEY, intent.getBooleanExtra(IS_PRODUCTION_KEY, false))
-
-            channel!!.invokeMethod(MKRAuthenticationType.AUTH.name.lowercase(), authArguments)
+            authArguments[IS_PRODUCTION_KEY] = intent.getBooleanExtra(IS_PRODUCTION_KEY, false)
+            authArguments[REFRESH_TOKEN_KEY] = ""
         } else {
-            val refreshArguments = HashMap<String, Any>()
             intent.getStringExtra(REFRESH_TOKEN_KEY)
-                ?.let { refreshArguments.put(REFRESH_TOKEN_KEY, it) }
-            intent.getStringExtra(CLIENT_ID)?.let { refreshArguments.put(CLIENT_ID, it) }
-            refreshArguments.put(IS_PRODUCTION_KEY, intent.getBooleanExtra(IS_PRODUCTION_KEY, false))
-
-            channel!!.invokeMethod(MKRAuthenticationType.REFRESH.name.lowercase(), refreshArguments)
+                ?.let { authArguments.put(REFRESH_TOKEN_KEY, it) }
+            intent.getStringExtra(URL_PARAMS_KEY)?.let { authArguments.put(URL_PARAMS_KEY, it) }
+            authArguments[IS_PRODUCTION_KEY] = intent.getBooleanExtra(IS_PRODUCTION_KEY, false)
         }
+
+        channel!!.invokeMethod(MKRAuthenticationType.AUTH.name.lowercase(), authArguments)
     }
 }

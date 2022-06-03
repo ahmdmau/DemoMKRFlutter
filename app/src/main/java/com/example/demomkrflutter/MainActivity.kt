@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.mkr_authentication.MKRAuthentication
 import com.example.mkr_authentication.REQUEST_CODE_AUTH
-import com.example.mkr_authentication.REQUEST_CODE_REFRESH
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,9 +17,6 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             REQUEST_CODE_AUTH -> {
-                // do somethin
-            }
-            REQUEST_CODE_REFRESH -> {
                 // do somethin
             }
         }

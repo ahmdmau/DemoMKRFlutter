@@ -41,13 +41,13 @@ class MKRAuthentication {
             activity.startActivityForResult(intent, REQUEST_CODE_AUTH)
         }
 
-        fun refresh(activity: Activity, accessToken: String) {
+        fun refresh(activity: Activity, refreshToken: String) {
             val intent = Intent(activity, MKRAuthentication::class.java)
-            intent.putExtra(REFRESH_TOKEN_KEY, accessToken)
+            intent.putExtra(REFRESH_TOKEN_KEY, refreshToken)
             intent.putExtra(IS_PRODUCTION_KEY, isProduction)
-            intent.putExtra(CLIENT_ID, clientId)
+            intent.putExtra(URL_PARAMS_KEY, "scope=sso:profile&client_id=$clientId")
             intent.putExtra(AUTH_TYPE_KEY, MKRAuthenticationType.REFRESH.name)
-            activity.startActivityForResult(intent, REQUEST_CODE_REFRESH)
+            activity.startActivityForResult(intent, REQUEST_CODE_AUTH)
         }
 
     }

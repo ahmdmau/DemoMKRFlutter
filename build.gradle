@@ -4,7 +4,8 @@ buildscript {
     ext.kotlin_version = '1.3.61'
     repositories {
         mavenLocal()
-
+        google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
@@ -21,11 +22,17 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.6.21' apply false
 }
 
+String storageUrl = System.env.FLUTTER_STORAGE_BASE_URL ?: "https://storage.googleapis.com"
 allprojects {
     repositories {
-        mavenLocal()
         google()
         jcenter()
+        maven {
+            url '/Users/mekari/Documents/Ahmad/auth_module/build/host/outputs/repo'
+        }
+        maven {
+            url "$storageUrl/download.flutter.io"
+        }
     }
 }
 
