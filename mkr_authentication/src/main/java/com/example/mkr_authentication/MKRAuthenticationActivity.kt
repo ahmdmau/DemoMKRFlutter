@@ -66,17 +66,10 @@ class MKRAuthenticationActivity : FlutterActivity() {
 
     private fun initializeMethod(authType: String) {
         val authArguments = HashMap<String, Any>()
-        if (authType == MKRAuthenticationType.AUTH.name) {
-            intent.getStringExtra(URL_PARAMS_KEY)?.let { authArguments.put(URL_PARAMS_KEY, it) }
-            authArguments[IS_PRODUCTION_KEY] = intent.getBooleanExtra(IS_PRODUCTION_KEY, false)
-            authArguments[REFRESH_TOKEN_KEY] = ""
-        } else {
-            intent.getStringExtra(REFRESH_TOKEN_KEY)
-                ?.let { authArguments.put(REFRESH_TOKEN_KEY, it) }
-            intent.getStringExtra(URL_PARAMS_KEY)?.let { authArguments.put(URL_PARAMS_KEY, it) }
-            authArguments[IS_PRODUCTION_KEY] = intent.getBooleanExtra(IS_PRODUCTION_KEY, false)
-        }
-
+        intent.getStringExtra(URL_PARAMS_KEY)?.let { authArguments.put(URL_PARAMS_KEY, it) }
+        authArguments[IS_PRODUCTION_KEY] = intent.getBooleanExtra(IS_PRODUCTION_KEY, false)
+        intent.getStringExtra(REFRESH_TOKEN_KEY)
+            ?.let { authArguments.put(REFRESH_TOKEN_KEY, it) }
         channel!!.invokeMethod(MKRAuthenticationType.AUTH.name.lowercase(), authArguments)
     }
 }

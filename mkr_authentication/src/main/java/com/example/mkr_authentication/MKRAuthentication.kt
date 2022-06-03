@@ -11,9 +11,7 @@ const val URL_PARAMS_KEY = "urlParams"
 const val IS_PRODUCTION_KEY = "isProd"
 const val AUTH_TYPE_KEY = "authConfiguration"
 const val REFRESH_TOKEN_KEY = "refreshToken"
-const val CLIENT_ID = "clientId"
-const val REQUEST_CODE_AUTH = 0
-const val REQUEST_CODE_REFRESH = 1
+const val REQUEST_CODE_AUTH = 1122
 
 class MKRAuthentication {
 
@@ -35,6 +33,7 @@ class MKRAuthentication {
 
         fun auth(activity: Activity) {
             val intent = Intent(activity, MKRAuthenticationActivity::class.java)
+            intent.putExtra(REFRESH_TOKEN_KEY, "")
             intent.putExtra(URL_PARAMS_KEY, "scope=sso:profile&client_id=$clientId")
             intent.putExtra(IS_PRODUCTION_KEY, isProduction)
             intent.putExtra(AUTH_TYPE_KEY, MKRAuthenticationType.AUTH.name)
@@ -44,8 +43,8 @@ class MKRAuthentication {
         fun refresh(activity: Activity, refreshToken: String) {
             val intent = Intent(activity, MKRAuthentication::class.java)
             intent.putExtra(REFRESH_TOKEN_KEY, refreshToken)
-            intent.putExtra(IS_PRODUCTION_KEY, isProduction)
             intent.putExtra(URL_PARAMS_KEY, "scope=sso:profile&client_id=$clientId")
+            intent.putExtra(IS_PRODUCTION_KEY, isProduction)
             intent.putExtra(AUTH_TYPE_KEY, MKRAuthenticationType.REFRESH.name)
             activity.startActivityForResult(intent, REQUEST_CODE_AUTH)
         }
